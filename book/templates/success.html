@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block _body %}
+<script type="text/javascript">
+  var queryDict = {}
+  location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]})
+  $(document).ready(function () {
+    $("#confirmation_num").text('Confirmation Number: ' + queryDict['num'])
+  })
+</script>
+
+<div class="container">
+  <h5>Registration Successful!</h5>
+  <h5 id='confirmation_num'></h5>
+</div>
+{% endblock %}

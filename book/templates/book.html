@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block _body %}
+{% include "paypal_form.html" %}
+
+<style media="screen">
+.fancy_text{
+  font-style: italic;
+  font-family: serif;
+}
+.main_header{
+}
+
+</style>
+
+
+<link rel="stylesheet" href='/static/css/booking_style.css'/>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script src="/static/javascript/booking_script.js"></script>
+
+<form class='booking_form' method="post">
+{% csrf_token %}
+
+<!-- Form Variables, Values to be changed by JS -->
+<input type="hidden" name="payment_type" id="payment_type" value="credit">
+<input type="hidden" name="stripe_token" id="stripe_token">
+
+
+<div class="col">
+
+  <!--Personal Info-->
+  <div class="row">
+    <div id="booking_header" class="col s12 l12 section center">
+      <h4 class='fancy_text main_header'>Book A Tour!</h4>
+    </div>
+    <div id='name' class="input-field col s12 l6">
+      {{form.name}}
+      <label class='fancy_text'>Name</label>
+    </div>
+    <div id='country' class="input-field col s12 l6">
+      <select id='country_selector'>
+        {% for country in countries %}
+        <option {% if country.alpha_3 == 'USA' %}selected{% endif %} value="{{country.alpha_3}}">{{country.name}}</option>
+        {% endfor %}
+      </select>
+      <label class='fancy_text'>Country of Origin</label>
+    </div>
+    <div id='email' class="input-field col s12 l6">
+      {{form.email}}
+      <label class='fancy_text'>Email Address</label>
+    </div>
+    <div id='confirm_email' class="input-field col s12 l6" style="display:none">
+      {{form.confirm_email}}
+      <label class='fancy_text'>Confirm Email Address</label>
+    </div>
+    <div class="col s12 l12">
+      <label class='emails_dont_match'style="display:none;color:red">*Emails Don't Match</label>
+    </div>
+
+    <div id='phone' class="input-field col s12 l6">
+      {{form.phone}}
+      <label class='fancy_text'>Phone Number</label>
+    </div>
+    <div id='confirm_phone' class="input-field col s12 l6" style="display:none">
+      {{form.confirm_phone}}
+      <label class='fancy_text'>Confirm Phone Number</label>
+    </div>
+    <div class="col s12 l12">
+      <label class='phone_numbers_dont_match' style="display:none;color:red">Phone Numbers Don't Match</label>
+    </div>
+
+  </div>
+
+
+<div class="divider"></div>
+
+<div id="tour_selection_div">
+  <h6 id="select_tour_label">Select A Tour({{tours|length}} Available)</h6>
+  <h6 id="tour_selected_label" style="display:none">Tour Selected</h6>
+  <div class="section tour_selector">
+    {% for tour in tours %}
+      <blockquote class='tour_block' tour_name="{{tour.name}}" tour_date="{{tour.date}}" tour_time="{{tour.time}}" tour_cost="{{tour.cost}}">
+      <div class="row s12">
+        <div class="col s6">
+          <h6 style='font-weight:bold; margin-top:0'>
+            {{tour.name}}
+          </h6>
+          {% if tour.spaces < 3 %}<label style="color:red">Only {{tour.spaces}} Spot{{tour.spaces|pluralize}} Left</label><br>{% endif %}
+          {{tour.date}} {{tour.time}} <br> ${{tour.cost}} Per Person
+        </div>
+        <div class="col s6 center">
+          <br>
+          <!--Gets ID of blockquote-->
+          <button type ='button' class="tour_select_btn waves-effect waves-light btn">Choose</button>
+        </div>
+      </div>
+      </blockquote>
+    {% endfor %}
+    <label><a style="display:none" class='waves-effect waves-light change_tour_btn'>Change Tour</a></label>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="row s12">
+  <div class="section col s6">
+    <h6>Select Payment Method</h6>
+    {% for payment_type in payment_types %}
+    <p><label>
+      <input class='payment_radio_btn' payment_code='{{payment_type.code}}' {% if payment_type.code == 'credit' %}checked{% endif %} name="group1" type="radio" />
+      <span>{{payment_type.name}}</span>
+    </p></label>
+    {% endfor %}
+  </div>
+
+  <div class="section col s6">
+    <div class="row">
+      <h6>Number of People</h6>
+      <div class="input-field">
+      <select id='num_people_selector'>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <!--More Generated Based on Available Spaces-->
+      </select>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<h6>Terms and Conditions</h6>
+<div id='terms_text' class="section">
+  <label>{{terms}}</label> <br>
+</div>
+<div class='section'>
+  <label>
+    <input id="agree_btn" type="checkbox"/>
+    <span id='agree_btn_label'>I Agree</span>
+  </label>
+</div>
+
+<div class="divider"></div>
+<div class="section">
+  <h6 id='total_cost'></h6>
+  <div class="section normal_checkout_button">
+    <button id='submit_btn' class="disabled btn waves-effect waves-light" type="submit">
+      Book
+     <i class="material-icons right">airplanemode_active</i>
+   </button> <br>
+
+
+    <label id='please_name'>Please Enter Your Name<br></label>
+    <label id='please_email'>Please Enter A Valid Email Address<br></label>
+    <label class='emails_dont_match'style="display:none">The Emails You Entered Do Not Match<br></label>
+    <label id='please_phone'>Please Enter A Valid Phone Number<br></label>
+    <label class='phone_numbers_dont_match'style="display:none">The Phone Numbers You Entered Do Not Match<br></label>
+    <label id='please_select_tour'>Please Select A Tour<br></label>
+    <label id='please_agree'>Please Agree to Our Terms and Conditions<br></label>
+  </div>
+</div>
+
+
+
+</div>
+
+</div>
+</form>
+
+{% endblock %}

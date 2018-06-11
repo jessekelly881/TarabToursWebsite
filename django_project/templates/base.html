@@ -1,0 +1,111 @@
+{% load widget_tweaks %}
+
+<link rel="stylesheet" href="static/base.css">
+<link rel="stylesheet" href="static/forms.css">
+
+<html lang="en" dir="ltr">
+<meta charset="utf-8">
+<title>{{base_variables.title}}</title>
+
+<header>
+  {% include "includes.html" %}
+  <script>$(document).ready(function(){M.AutoInit()});</script> 
+  <link rel="stylesheet" href="/static/base.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119781943-1');
+  </script>
+
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo left">Tarab Tours</a>
+      <ul id="nav" class="right">
+        {% for link in base_variables.nav_bar_links %}
+          <li><a href="{{link.url}}" class='{% if link.hide_mid_down %}hide-on-med-and-down{% endif %}'>{{link.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+
+
+</header>
+
+
+
+<body>
+  {% block _body %}
+  <p>This page is under construction. Please pardon our mess...</p>
+  {% endblock %}
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="fa fa-comments"></i>
+    </a>
+    <ul>
+      <li><a target="_blank" href="{{base_variables.social.instagram}}" class="btn-floating red"><i class="fa fa-instagram"></i></a></li>
+      <li><a target="_blank" href="{{base_variables.social.twitter}}" class="btn-floating yellow darken-1"><i class="fa fa-twitter"></i></a></li>
+      <li><a target="_blank" href="{{base_variables.social.facebook}}" class="btn-floating blue"><i class="fa fa-facebook-square"></i></a></li>
+    </ul>
+  </div>
+</body>
+
+
+
+
+<footer class="page-footer">
+  <div class="container row s12">
+
+
+    <div class="col s4 center-align">
+      <h6 class="white-text">Links</h6>
+      <ul>
+        {% for link in base_variables.links %}
+        <li><a class='grey-text text-lighten-4' href="{{link.url}}">{{link.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col s4 center-align">
+        <h6 class="white-text">Contact Us</h6>
+        <ul>
+            <li><i class="fa fa-phone"></i> &nbsp {{base_variables.contact.phone}}</li>
+            <li><i class="fa fa-email"></i>{{base_variables.contact.email}}</li>
+        </ul>
+      </div>
+
+      <div class="col s4 center-align">
+        <h6 class="white-text">Talk To Us</h6>
+        <ul>
+            <li><a class="grey-text text-lighten-4" target="_blank" href="{{base_variables.social.facebook}}"><i class="fa fa-facebook"></i>  &nbsp Facebook</a></li>
+            <li><a class="grey-text text-lighten-4" target="_blank" href="{{base_variables.social.instagram}}"><i class="fa fa-instagram"></i>  &nbsp Instagram</a></li>
+            <li><a class="grey-text text-lighten-4" target="_blank" href="{{base_variables.social.twitter}}"><i class="fa fa-twitter"></i>  &nbsp Twitter</a></li>
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="footer-copyright">
+    <div class="container row">
+      {% for cp_line in base_variables.copyright_lines %}
+        <div class="container col">{{cp_line}}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+</footer>
+
+
+
+
+
+</html>

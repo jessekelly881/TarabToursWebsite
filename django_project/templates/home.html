@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block _body %}
+
+<!-- <img src="static/images/img3.jpeg" style="width:100%;"> -->
+
+
+
+
+<!--
+<form action="index.html" method="post">
+<div class = 'center'><h4>Book A Tour</h4></div>
+<div class="personal_info col s12">
+
+
+  <div class="row">
+    <div class="input-field col s6">
+    <input type="text">
+    <label for="fname">Name</label>
+    </div>
+
+    <div class="input-field col s6">
+    <input type="text">
+    <label for="lname">Email</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-field col s6">
+    <select class="browser-default" onchange="tour_change()" name="tour" id="tour_select">
+      <option value="vegan">Vegan Vegitarian Food Tour</option>
+      <option value="other">Some Other Tour</option>
+    </select>
+
+    </div>
+  </div>
+
+</div>
+</form>
+-->
+
+
+<style media="screen">
+  .why_us{
+    background-color: #e7e4df;
+    padding-top: 10px;
+    padding-bottom: 50px;
+  }
+  .why_us_sub_head{
+    color: red;
+    font-style: italic;
+    font-size: 16;
+  }
+
+  .quote{
+    font-style: italic;
+  }
+
+</style>
+
+
+
+<!-- Spacing Layout: 2 [2] 1 [2] 1 [2] 2 -->
+<!--
+<div class="section row why_us">
+
+  <div class="s6 offset-s3 center why_us_head">
+    <h4>Why Tarab Tours?<h4></div>
+
+  <div class="col l2 s8 offset-l2 offset-s2 center">
+    <p class='why_us_sub_head'>A</p>
+  </div>
+
+  <div class="col l2 s8 offset-l1 offset-s2 center">
+    <p class='why_us_sub_head'>B</p>
+  </div>
+
+  <div class="col l2 s8 offset-l1 offset-s2 center">
+    <p class='why_us_sub_head'>C</p>
+  </div>
+</div>
+-->
+
+<style media="screen">
+  .gmaps_head{
+    margin:0;
+    padding:0;
+  }
+</style>
+<script type="text/javascript">
+var meet_point_html = '<h6 class="center gmaps_head">Where to Meet Us</h6>Near the something or other'
+$(function() {
+    new Maplace({
+        locations: [{lat: 19.437844, lon: -99.139584, icon: 'http://maps.google.com/mapfiles/marker.png', zoom: 14, html: meet_point_html}],
+        controls_on_map: false,
+    }).Load();
+});
+</script>
+
+<!--
+<div class="parallax-container">
+    <div class="parallax"><img src="static/images/img1.jpeg"></div>
+  </div>
+<div class="container center">
+   <h4 class='section quote'>"David was an excellent guide - he really knows the best veggie spots in cdmx!" - Zeb(Australia)</h4>
+   <h4 class='section quote'>"This was among the most fun we had in our five days in DF." - John(Massachusets, USA)</h4>
+</div>
+<div class="parallax-container">
+    <div class="parallax"><img src="static/images/img2.jpeg"></div>
+</div>
+-->
+<div id="gmap" style="with:300px;height:250px;"></div>
+{% endblock %}
